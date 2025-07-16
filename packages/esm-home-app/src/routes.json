@@ -18,6 +18,39 @@
       "component": "homeNavMenu",
       "online": true,
       "offline": true
-    }
+    },
+    {
+    "name": "pharmacy-dashboard-link",
+    "slot": "homepage-dashboard-slot",
+    "component": "Pharmacy",
+    "meta": {
+      "name": "pharmacy",
+      "title": "Pharmacy",
+      "externalUrl": "https://app.quincy.health/login"
+    },
+    "order": 10000
+  },
+  {
+    "name": "scans-dashboard-link",
+    "slot": "homepage-dashboard-slot",
+    "component": "Scans",
+    "meta": {
+      "name": "scans",
+      "title": "Scans",
+      "externalUrl": "https://www.vista-health.co.uk/"
+    },
+    "order": 10001
+  },
+  {
+    "name": "lab-tests-dashboard-link",
+    "slot": "homepage-dashboard-slot",
+    "component": "LabTests",
+    "meta": {
+      "name": "lab-tests",
+      "title": "Lab Tests",
+      "externalUrl": "https://nwpblood.co.uk/sec_Login/"
+    },
+    "order": 10001
+  }
   ]
 }

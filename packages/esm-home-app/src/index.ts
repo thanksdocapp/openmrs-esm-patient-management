@@ -2,6 +2,8 @@ import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { esmHomeSchema } from './config-schema';
 import homeNavMenuComponent from './side-menu/side-menu.component';
 import rootComponent from './root.component';
+import { sidebarLink } from './createSidebarLink.component';
+import { pharmacyMeta, scansMeta, labTestsMeta } from './dashboard.meta';
 
 const moduleName = '@openmrs/esm-home-app';
 const pageName = 'home';
@@ -20,3 +22,9 @@ export const homeNavMenu = getSyncLifecycle(homeNavMenuComponent, options);
 export function startupApp() {
   defineConfigSchema(moduleName, esmHomeSchema);
 }
+
+export const Pharmacy = getSyncLifecycle(sidebarLink(pharmacyMeta), options);
+
+export const Scans = getSyncLifecycle(sidebarLink(scansMeta), options);
+
+export const LabTests = getSyncLifecycle(sidebarLink(labTestsMeta), options);

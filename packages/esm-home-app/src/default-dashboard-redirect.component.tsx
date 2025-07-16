@@ -10,7 +10,7 @@ export function DefaultDashboardRedirect() {
   const session = useSession();
   const roles = session?.user?.roles;
 
-  const preferredDashboards = ['appointments', 'laboratory', 'patient-lists'];
+  const preferredDashboards = ['service-queues', 'appointments', 'laboratory', 'patient-lists'];
 
   const ungroupedDashboards = assignedExtensions.map((e) => e.meta).filter((e) => Object.keys(e).length) || [];
   const dashboards = ungroupedDashboards as Array<DashboardConfig>;
@@ -21,9 +21,7 @@ export function DefaultDashboardRedirect() {
     .find((dashboardName) => dashboards.some((d) => d.name === dashboardName));
 
   // If no valid role-based dashboard, fall back to preferred list
-  const fallbackDefault = preferredDashboards.find((name) =>
-    dashboards.some((d) => d.name === name)
-  );
+  const fallbackDefault = preferredDashboards.find((name) => dashboards.some((d) => d.name === name));
 
   // Final default: role-based OR preferred OR just use first available
   const defaultDashboard = roleBasedDefault || fallbackDefault || dashboards[0]?.name;
