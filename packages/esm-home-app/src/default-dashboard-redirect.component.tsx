@@ -9,12 +9,28 @@ export function DefaultDashboardRedirect() {
   const { defaultDashboardPerRole } = useConfig<ConfigSchema>();
   const session = useSession();
   const roles = session?.user?.roles;
-  const defaultDashboard =
-    roles?.map((role) => defaultDashboardPerRole[role.display]).filter(Boolean)[0] ?? 'service-queues';
+
+  const preferredDashboards = ['appointments', 'laboratory', 'patient-lists'];
 
   const ungroupedDashboards = assignedExtensions.map((e) => e.meta).filter((e) => Object.keys(e).length) || [];
   const dashboards = ungroupedDashboards as Array<DashboardConfig>;
-  const activeDashboard = dashboards.find((dashboard) => dashboard.name === defaultDashboard);
 
-  return <Navigate to={`/home/${activeDashboard.name}`} />;
+  // Get the dashboard name from role config
+  const roleBasedDefault = roles
+    .map((role) => defaultDashboardPerRole?.[role.display])
+    .find((dashboardName) => dashboards.some((d) => d.name === dashboardName));
+
+  // If no valid role-based dashboard, fall back to preferred list
+  const fallbackDefault = preferredDashboards.find((name) =>
+    dashboards.some((d) => d.name === name)
+  );
+
+  // Final default: role-based OR preferred OR just use first available
+  const defaultDashboard = roleBasedDefault || fallbackDefault || dashboards[0]?.name;
+
+  if (!defaultDashboard) {
+    return <div>No dashboards available</div>;
+  }
+
+  return <Navigate to={`/home/${defaultDashboard}`} />;
 }
